@@ -6,6 +6,7 @@ const FormularioActualizar = () => {
     const [nombrePro, setNombre] = useState('');
     const [descripcion, setDescripcion] = useState('');
     const [precio, setPrecio] = useState('');
+    const [stock, setStock] = useState('');
     const { id } = useParams();
     const navigate = useNavigate();
    
@@ -21,6 +22,7 @@ const FormularioActualizar = () => {
             setNombre(producto.nombrePro);
             setDescripcion(producto.descripcion);
             setPrecio(producto.precio);
+            setStock(producto.stock);
           } else {
             alert('No se encontraron datos del producto');
           }
@@ -37,7 +39,8 @@ const FormularioActualizar = () => {
     const actualizarPro = {
       nombrePro,
       descripcion,
-      precio
+      precio,
+      stock
     };
 
     try {
@@ -92,6 +95,17 @@ const FormularioActualizar = () => {
               />
             </div>
 
+            <div className="mb-4">
+              <label htmlFor="stock" className="block mb-2 text-gray-400 font-medium">
+                Stock
+              </label>
+              <input
+                type="number"
+                className="w-full px-3 py-2 border bg-gray-700 rounded focus:border-blue-500 focus:bg-gray-800 focus:outline-none text-white"
+                value={stock}
+                onChange={(e) => setStock(e.target.value)}
+              />
+            </div>
             <button type="submit" className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600">
               Enviar
             </button>

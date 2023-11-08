@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Link,useNavigate  } from "react-router-dom";
-import { useUser } from './UserContext';
+import { Link, useNavigate } from "react-router-dom";
+import { useUser } from "./UserContext";
 const Menu = ({ isLoggedIn, onLogout }) => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
-  const { userName } = useUser();
+  const { userName, totalConteo } = useUser();
   const handleLogout = () => {
     onLogout();
     navigate("/");
@@ -15,7 +15,7 @@ const Menu = ({ isLoggedIn, onLogout }) => {
 
   return (
     <nav className="bg-gray-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <div className="flex-shrink-0">
@@ -23,7 +23,7 @@ const Menu = ({ isLoggedIn, onLogout }) => {
                 to="#"
                 className="text-white bg-indigo-800 px-3 py-2 rounded-md text-sm font-medium"
               >
-               Bienvenido {userName}
+                Bienvenido {userName}
               </Link>
             </div>
           </div>
@@ -41,11 +41,32 @@ const Menu = ({ isLoggedIn, onLogout }) => {
               >
                 Usuarios
               </Link>
+              {totalConteo > 0 && (
+                <span className="relative inline-block">
+                  <Link
+                    to="/Pedidos"
+                    className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                  >
+                    Pedidos
+                  </Link>
+                  <span className="bg-gray-300 text-black w-5 h-5 flex items-center justify-center rounded-full absolute -top-2 -right-1">
+                    {totalConteo}
+                  </span>
+                </span>
+              )}
+              {totalConteo === 0 && (
+                <Link
+                  to="/Pedidos"
+                  className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                >
+                  Pedidos
+                </Link>
+              )}
               <Link
-                to="/acerca-de"
+                to="/Ventas"
                 className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
               >
-                Acerca de
+                Ventas
               </Link>
               <Link
                 to="#"
@@ -118,11 +139,27 @@ const Menu = ({ isLoggedIn, onLogout }) => {
             >
               Usuarios
             </Link>
+            {totalConteo > 0 && (
+              <Link
+                to="/Pedidos"
+                className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+              >
+                Pedidos: {totalConteo}
+              </Link>
+            )}
+            {totalConteo === 0 && (
+              <Link
+                to="/Pedidos"
+                className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+              >
+                Pedidos
+              </Link>
+            )}
             <Link
-              to="/acerca-de"
+              to="/Ventas"
               className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
             >
-              Acerca de
+              Ventas
             </Link>
             <Link
               to="#"

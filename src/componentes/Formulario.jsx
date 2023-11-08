@@ -4,6 +4,7 @@ const Formulario = () => {
   const [nombre, setNombre] = useState('');
   const [descripcion, setDescripcion] = useState('');
   const [precio, setPrecio] = useState('');
+  const [stock, setStock] = useState('');
   const [archivo, setArchivo] = useState(null);
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -12,14 +13,16 @@ const Formulario = () => {
     formData.append('nombrePro', nombre);
     formData.append('descripcion', descripcion);
     formData.append('precio', parseFloat(precio));
+    formData.append('stock', parseFloat(stock));
     formData.append('imagen', archivo); // Adjuntar el archivo al FormData
 
     try {
       const respuesta = await guardarProducto(formData);
-      console.log('Producto agregado correctamente:', respuesta);
+      //console.log('Producto agregado correctamente:', respuesta);
       setNombre('');
       setDescripcion('');
       setPrecio('');
+      setStock('');
       setArchivo(null);
     } catch (error) {
       console.error('Error al guardar el producto:', error);
@@ -71,6 +74,20 @@ const Formulario = () => {
                 onChange={(event) => setPrecio(event.target.value)}
               />
             </div>
+             
+            <div className="mb-4">
+              <label htmlFor="stock" className="block mb-2  text-gray-400 font-medium">
+                Stock
+              </label>
+              <input
+                type="number"
+                className="w-full px-3 py-2 border bg-gray-700 rounded  focus:border-blue-500 focus:bg-gray-800 focus:outline-none 
+                text-white"
+                required
+                value={stock}
+                onChange={(event) => setStock(event.target.value)}
+              />
+            </div>
 
             <div className="mb-4">
               <label htmlFor="archivo" className="block mb-2  text-gray-400 font-medium">
@@ -84,7 +101,6 @@ const Formulario = () => {
                 onChange={(event) => setArchivo(event.target.files[0])}
               />
             </div>
-
             <button
               type="submit"
               className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"

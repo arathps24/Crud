@@ -1,4 +1,4 @@
-const API3 = "http://74.208.104.215:3000/api/admin";
+const API3 = "http://localhost:3001/api/admin";
 
 export const getAdmin = async () => {
   const res = await fetch(API3, {
@@ -8,7 +8,7 @@ export const getAdmin = async () => {
   return await res.json();
 };
 
-const API2 = "http://74.208.104.215:3000/api/admin/login";
+const API2 = "http://localhost:3001/api/admin/login";
 
 export const loginadmin = async (nombre, password) => {
   const res = await fetch(API2, {
@@ -31,7 +31,7 @@ export const loginadmin = async (nombre, password) => {
   }
 };
 
-const API = "http://74.208.104.215:3000/api/producto";
+const API = "http://localhost:3001/api/producto";
 
 export const guardarProducto = async (formData) => {
   try {
@@ -85,7 +85,7 @@ export const MostrarProducto = async () => {
 };
 //----------------------------------------------------------
 
-const API4 = "http://74.208.104.215:3000/api/usuario";
+const API4 = "http://localhost:3001/api/usuario";
 
 export const guardarUsuario = async (formData) => {
   try {
@@ -136,4 +136,65 @@ export const MostrarUsuario = async () => {
   });
 
   return await res.json();
+};
+
+///------------------------Ventas------------------------------------
+const API5 = "http://localhost:3001/car/ventas";
+
+export const MostrarVentas = async () => {
+  const res = await fetch(API5, {
+    method: "GET",
+  });
+
+  return await res.json();
+};
+
+//////----------------------cambio de contraseña
+const API6 = "http://localhost:3001/api/cambio-password";
+
+export const ActualizarPassword = async (token, actualizarPass) => {
+  const res = await fetch(`${API6}/${token}`, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(actualizarPass),
+  });
+  return res;
+};
+
+const API7 = "http://localhost:3001/api/usuario-token";
+export const MostrarUsuarioToken = async (token) => {
+  try {
+    const res = await fetch(`${API7}/${token}`);
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Error al obtener los datos del producto:", error);
+    throw error;
+  }
+};
+
+/////////---------------------Mostrar Pedidos
+const API8 = "http://localhost:3001/car/pedidos";
+
+export const MostraPedidos = async () => {
+  const res = await fetch(API8, {
+    method: "GET",
+  });
+
+  return await res.json();
+};
+
+export const AprobarPedido = async (id, AprobarPedido) => {
+  const res = await fetch(`${API8}/${id}`, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(AprobarPedido),
+  });
+  return res;
 };

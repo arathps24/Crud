@@ -7,6 +7,9 @@ import FormularioActualizar from "./componentes/FormularioEditado";
 import Usuario from "./componentes/Usuario";
 import Menu from "./componentes/Menu";
 import { UserProvider } from "./componentes/UserContext";
+import Ventas from "./componentes/Ventas";
+import Cambio from "./componentes/Cambio_contra";
+import Pedidos from "./componentes/Pedidos";
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -83,6 +86,33 @@ function App() {
             )
           }
         />
+        <Route
+          path="/Ventas"
+          element={
+            isLoggedIn ? (
+              <>
+                <Menu isLoggedIn={isLoggedIn} onLogout={handleLogout} />
+                <Ventas />
+              </>
+            ) : (
+              <Navigate to="/" />
+            )
+          }
+        />
+        <Route
+          path="/Pedidos"
+          element={
+            isLoggedIn ? (
+              <>
+                <Menu isLoggedIn={isLoggedIn} onLogout={handleLogout} />
+                <Pedidos />
+              </>
+            ) : (
+              <Navigate to="/" />
+            )
+          }
+        />
+        <Route path="/Cambio/:token" element={<Cambio />} />
       </Routes>
     </UserProvider>
   );
