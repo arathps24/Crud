@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { MostrarVentas } from "../api/api";
 import PdfModal from "./PdfModal";
-
+import Paginador from "./Paginador";
 const Ventas = () => {
   const [ventas, setVentas] = useState([]);
   const [pdfLink, setPdfLink] = useState(null);
   const [filtrarTablas, setFiltrartTablas] = useState(true);
+  //----- Paginador----------------------
+
+  const [paginaActual, setPaginaActual] = useState(1);
+  const elementosPorPagina = 7; // Número de elementos por página
+  const cambiarPagina = (numeroPagina) => {
+    setPaginaActual(numeroPagina);
+  };
   // Simulación de carga de datos desde una API
   useEffect(() => {
     const obtenerVentas = async () => {
@@ -74,30 +81,41 @@ const Ventas = () => {
                 </tr>
               </thead>
               <tbody>
-                {ventas.map((venta) => (
-                  <tr key={venta.id}>
-                    <td className="py-4 px-6 border-b text-center">
-                      {venta.id}
-                    </td>
-                    <td className="py-4 px-6 border-b text-center">
-                      {venta.nombreCom}
-                    </td>
-                    <td className="py-4 px-6 border-b text-center">
-                      {formatearFecha(venta.fecha)}
-                    </td>
-                    <td className="py-4 px-6 border-b text-center">
-                      <button
-                        className="bg-red-500 hover:bg-red-700
+                {ventas
+                  .slice(
+                    (paginaActual - 1) * elementosPorPagina,
+                    paginaActual * elementosPorPagina
+                  )
+                  .map((venta) => (
+                    <tr key={venta.id}>
+                      <td className="py-4 px-6 border-b text-center">
+                        {venta.id}
+                      </td>
+                      <td className="py-4 px-6 border-b text-center">
+                        {venta.nombreCom}
+                      </td>
+                      <td className="py-4 px-6 border-b text-center">
+                        {formatearFecha(venta.fecha)}
+                      </td>
+                      <td className="py-4 px-6 border-b text-center">
+                        <button
+                          className="bg-red-500 hover:bg-red-700
                    text-white font-bold py-2 px-4 rounded"
-                        onClick={() => verPDF(venta.tiket)}
-                      >
-                        Ver Tiket
-                      </button>
-                    </td>
-                  </tr>
-                ))}
+                          onClick={() => verPDF(venta.tiket)}
+                        >
+                          Ver Tiket
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
+            <Paginador
+              paginaActual={paginaActual}
+              totalElementos={ventas.length} // Reemplaza con la longitud de tus datos
+              elementosPorPagina={elementosPorPagina}
+              cambiarPagina={cambiarPagina}
+            />
           </div>
         </div>
       </div>

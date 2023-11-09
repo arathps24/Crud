@@ -17,7 +17,7 @@ const Pedidos = () => {
   //----- Paginador----------------------
 
   const [paginaActual, setPaginaActual] = useState(1);
-  const elementosPorPagina = 7; // Número de elementos por página
+  const elementosPorPagina = 3; // Número de elementos por página
   const cambiarPagina = (numeroPagina) => {
     setPaginaActual(numeroPagina);
   };
@@ -50,9 +50,15 @@ const Pedidos = () => {
   const mostrarPedidosRecoger = () => {
     setMostrarRecoger(true);
     setMostrarDomicilio(false);
+    setPaginaActual(1); // Reiniciar la página actual al mostrar los pedidos a recoger
+    setMostrarRecoger(true);
+    setMostrarDomicilio(false);
   };
 
   const mostrarPedidosDomicilio = () => {
+    setMostrarDomicilio(true);
+    setMostrarRecoger(false);
+    setPaginaActual(1); // Reiniciar la página actual al mostrar los pedidos a domicilio
     setMostrarDomicilio(true);
     setMostrarRecoger(false);
   };
@@ -163,6 +169,10 @@ const Pedidos = () => {
                   <tbody>
                     {ventas
                       .filter((venta) => venta.TipoEnvio === "Domicilio")
+                      .slice(
+                        (paginaActual - 1) * elementosPorPagina,
+                        paginaActual * elementosPorPagina
+                      )
                       .map((venta) => (
                         <tr key={venta.id}>
                           <td className="py-4 px-6 border-b text-center">
@@ -196,7 +206,10 @@ const Pedidos = () => {
                 </table>
                 <Paginador
                   paginaActual={paginaActual}
-                  totalElementos={ventas.length} // Reemplaza con la longitud de tus datos
+                  totalElementos={
+                    ventas.filter((venta) => venta.TipoEnvio === "Domicilio")
+                      .length
+                  }
                   elementosPorPagina={elementosPorPagina}
                   cambiarPagina={cambiarPagina}
                 />
@@ -228,6 +241,10 @@ const Pedidos = () => {
                   <tbody>
                     {ventas
                       .filter((venta) => venta.TipoEnvio === "Recoger")
+                      .slice(
+                        (paginaActual - 1) * elementosPorPagina,
+                        paginaActual * elementosPorPagina
+                      )
                       .map((venta) => (
                         <tr key={venta.id}>
                           <td className="py-4 px-6 border-b text-center">
@@ -261,7 +278,10 @@ const Pedidos = () => {
                 </table>
                 <Paginador
                   paginaActual={paginaActual}
-                  totalElementos={ventas.length} // Reemplaza con la longitud de tus datos
+                  totalElementos={
+                    ventas.filter((venta) => venta.TipoEnvio === "Recoger")
+                      .length
+                  }
                   elementosPorPagina={elementosPorPagina}
                   cambiarPagina={cambiarPagina}
                 />
