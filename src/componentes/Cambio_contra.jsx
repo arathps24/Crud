@@ -7,7 +7,7 @@ export default function Cambio() {
   const [mensaje, setMensaje] = useState("");
   const { token } = useParams();
   const [tokenValido, setTokenValido] = useState(true);
-  const [passwordaActualizada, setPasswordActualizada] = useState(false);
+  const [passwordActualizada, setPasswordActualizada] = useState(false);
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
   };
@@ -47,7 +47,7 @@ export default function Cambio() {
         className="max-w-[400px] w-full mx-auto bg-gray-900 p-8 px-8 rounded-lg"
         onSubmit={handleSubmit}
       >
-        {!contrasenaActualizada ? ( // Verifica si la contraseña ha sido actualizada
+        {!passwordActualizada ? ( // Verifica si la contraseña ha sido actualizada
           <>
             {!tokenValido ? ( // Si el token es inválido, muestra este contenido
               <>
