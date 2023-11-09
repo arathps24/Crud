@@ -142,25 +142,16 @@ const Menu = ({ isLoggedIn, onLogout }) => {
             {totalConteo > 0 && (
               <Link
                 to="/Pedidos"
-<<<<<<< HEAD
                 className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
               >
-=======
-  className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium" >
->>>>>>> 250eff13a47d91be38379aed618d3850b815c257
                 Pedidos: {totalConteo}
               </Link>
             )}
             {totalConteo === 0 && (
               <Link
-<<<<<<< HEAD
                 to="/Pedidos"
                 className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
               >
-=======
-                to="/Pedidos"             
-  className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
->>>>>>> 250eff13a47d91be38379aed618d3850b815c257
                 Pedidos
               </Link>
             )}
