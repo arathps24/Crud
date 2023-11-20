@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { MostrarProducto, borrarProducto } from "../api/api";
+import Paginador from "./Paginador";
 export default function Inicio() {
   const [productos, setProductos] = useState([]);
   const [productoSeleccionado, setProductoSeleccionado] = useState(null);
   const [filtrarTablas, setFiltrartTablas] = useState(true);
   const [stockCeroConteo, setStockCeroConteo] = useState(0);
+  //----- Paginador----------------------
+  const [paginaActual, setPaginaActual] = useState(1);
+  const elementosPorPagina = 7; // Número de elementos por página
+  const cambiarPagina = (numeroPagina) => {
+    setPaginaActual(numeroPagina);
+  };
   // Simulación de carga de datos desde una API
   useEffect(() => {
     const obtenerProductos = async () => {
@@ -90,6 +97,10 @@ export default function Inicio() {
                 {filtrarTablas
                   ? productos
                       .filter((producto) => producto.stock > 0)
+                      .slice(
+                        (paginaActual - 1) * elementosPorPagina,
+                        paginaActual * elementosPorPagina
+                      )
                       .map((producto) => (
                         <tr key={producto.id}>
                           <td className="py-4 px-6 border-b text-center">
@@ -138,6 +149,10 @@ export default function Inicio() {
                       ))
                   : productos
                       .filter((producto) => producto.stock <= 0)
+                      .slice(
+                        (paginaActual - 1) * elementosPorPagina,
+                        paginaActual * elementosPorPagina
+                      )
                       .map((producto) => (
                         <tr key={producto.id}>
                           <td className="py-4 px-6 border-b text-center">
@@ -188,6 +203,12 @@ export default function Inicio() {
             </table>
           </div>
           <div className="p-4">
+            <Paginador
+              paginaActual={paginaActual}
+              totalElementos={productos.length} // Reemplaza con la longitud de tus datos
+              elementosPorPagina={elementosPorPagina}
+              cambiarPagina={cambiarPagina}
+            />
             <Link to="/Formulario">
               <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                 Agregar nuevo producto

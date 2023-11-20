@@ -30,7 +30,12 @@ const Paginador = ({
   return (
     <div className="flex justify-center">
       {paginaActual > 1 && (
-        <button onClick={() => irAPagina(paginaActual - 1)}>« Anterior</button>
+        <button
+          className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded m-1"
+          onClick={() => irAPagina(paginaActual - 1)}
+        >
+          « Anterior
+        </button>
       )}
       {[...Array(totalPaginas)].map(
         (_, index) =>
@@ -48,7 +53,12 @@ const Paginador = ({
           )
       )}
       {paginaActual !== totalPaginas && (
-        <button onClick={() => irAPagina(paginaActual + 1)}>Siguiente »</button>
+        <button
+          className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded m-1"
+          onClick={() => irAPagina(paginaActual + 1)}
+        >
+          Siguiente »
+        </button>
       )}
     </div>
   );
