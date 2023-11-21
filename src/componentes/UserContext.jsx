@@ -10,6 +10,7 @@ export const UserProvider = ({ children }) => {
   };
   const updateTotalConteo = (count) => {
     setTotalConteo(count);
+    return count;
   };
 
   return (

@@ -17,22 +17,24 @@ const Pedidos = () => {
   //----- Paginador----------------------
 
   const [paginaActual, setPaginaActual] = useState(1);
-  const elementosPorPagina = 3; // Número de elementos por página
+  const elementosPorPagina = 7; // Número de elementos por página
   const cambiarPagina = (numeroPagina) => {
     setPaginaActual(numeroPagina);
   };
   //------------------------------------
-  useEffect(() => {
-    const obtenerVentas = async () => {
-      try {
-        const response = await MostraPedidos();
-        setVentas(response);
-      } catch (error) {
-        console.error("Error al obtener las ventas:", error);
-      }
-    };
+  const obtenerVentas = async () => {
+    try {
+      const response = await MostraPedidos();
+      setVentas(response);
+    } catch (error) {
+      console.error("Error al obtener las ventas:", error);
+    }
+  };
 
+  useEffect(() => {
     obtenerVentas();
+    const intervalId = setInterval(obtenerVentas, 1000);
+    return () => clearInterval(intervalId);
   }, []);
 
   const verPDF = (pdf) => {
