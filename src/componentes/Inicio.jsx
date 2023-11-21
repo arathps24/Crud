@@ -40,8 +40,10 @@ export default function Inicio() {
   const handleEditarProducto = (producto) => {
     setProductoSeleccionado(producto);
   };
+
   const segundaTabla = () => {
     setFiltrartTablas(!filtrarTablas);
+    setPaginaActual(1);
   };
 
   useEffect(() => {
@@ -203,12 +205,16 @@ export default function Inicio() {
             </table>
           </div>
           <div className="p-4">
-            <Paginador
-              paginaActual={paginaActual}
-              totalElementos={productos.length} // Reemplaza con la longitud de tus datos
-              elementosPorPagina={elementosPorPagina}
-              cambiarPagina={cambiarPagina}
-            />
+            {productos.length > 0 && (
+              <Paginador
+                paginaActual={paginaActual}
+                totalElementos={
+                  filtrarTablas ? productos.length : stockCeroConteo
+                } // Reemplaza con la longitud de tus datos
+                elementosPorPagina={elementosPorPagina}
+                cambiarPagina={cambiarPagina}
+              />
+            )}
             <Link to="/Formulario">
               <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                 Agregar nuevo producto

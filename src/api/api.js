@@ -1,4 +1,4 @@
-const API3 = "http://localhost:3001/api/admin";
+const API3 = "https://abarrotesneon.store/api/admin";
 
 export const getAdmin = async () => {
   const res = await fetch(API3, {
@@ -8,7 +8,7 @@ export const getAdmin = async () => {
   return await res.json();
 };
 
-const API2 = "http://localhost:3001/api/admin/login";
+const API2 = "https://abarrotesneon.store/api/admin/login";
 
 export const loginadmin = async (nombre, password) => {
   const res = await fetch(API2, {
@@ -31,7 +31,7 @@ export const loginadmin = async (nombre, password) => {
   }
 };
 
-const API = "http://localhost:3001/api/producto";
+const API = "https://abarrotesneon.store/api/producto";
 
 export const guardarProducto = async (formData) => {
   try {
@@ -85,7 +85,7 @@ export const MostrarProducto = async () => {
 };
 //----------------------------------------------------------
 
-const API4 = "http://localhost:3001/api/usuario";
+const API4 = "https://abarrotesneon.store/api/usuario";
 
 export const guardarUsuario = async (formData) => {
   try {
@@ -139,7 +139,7 @@ export const MostrarUsuario = async () => {
 };
 
 ///------------------------Ventas------------------------------------
-const API5 = "http://localhost:3001/car/ventas";
+const API5 = "https://abarrotesneon.store/car/ventas";
 
 export const MostrarVentas = async () => {
   const res = await fetch(API5, {
@@ -150,7 +150,7 @@ export const MostrarVentas = async () => {
 };
 
 //////----------------------cambio de contraseña
-const API6 = "http://localhost:3001/api/cambio-password";
+const API6 = "https://abarrotesneon.store/api/cambio-password";
 
 export const ActualizarPassword = async (token, actualizarPass) => {
   const res = await fetch(`${API6}/${token}`, {
@@ -164,7 +164,7 @@ export const ActualizarPassword = async (token, actualizarPass) => {
   return res;
 };
 
-const API7 = "http://localhost:3001/api/usuario-token";
+const API7 = "https://abarrotesneon.store/api/usuario-token";
 export const MostrarUsuarioToken = async (token) => {
   try {
     const res = await fetch(`${API7}/${token}`);
@@ -177,7 +177,7 @@ export const MostrarUsuarioToken = async (token) => {
 };
 
 /////////---------------------Mostrar Pedidos
-const API8 = "http://localhost:3001/car/pedidos";
+const API8 = "https://abarrotesneon.store/car/pedidos";
 
 export const MostraPedidos = async () => {
   const res = await fetch(API8, {

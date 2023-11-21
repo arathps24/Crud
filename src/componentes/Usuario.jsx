@@ -86,12 +86,14 @@ export default function Usuario() {
                   ))}
               </tbody>
             </table>
-            <Paginador
-              paginaActual={paginaActual}
-              totalElementos={usuarios.length} // Reemplaza con la longitud de tus datos
-              elementosPorPagina={elementosPorPagina}
-              cambiarPagina={cambiarPagina}
-            />
+            {usuarios.length > 0 && (
+              <Paginador
+                paginaActual={paginaActual}
+                totalElementos={usuarios.length} // Reemplaza con la longitud de tus datos
+                elementosPorPagina={elementosPorPagina}
+                cambiarPagina={cambiarPagina}
+              />
+            )}
           </div>
         </div>
       </div>
