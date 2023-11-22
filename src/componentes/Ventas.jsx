@@ -6,6 +6,7 @@ import Paginador from "./Paginador";
 const Ventas = () => {
   const [ventas, setVentas] = useState([]);
   const [pdfLink, setPdfLink] = useState(null);
+  const [busqueda, setBusqueda] = useState("");
 
   //-----------mensaje
   const [mostrarMensajeAprobacion, setMostrarMensajeAprobacion] =
@@ -159,7 +160,6 @@ const Ventas = () => {
       }, 3000);
     }
   };
-
   const renderizarInputFiltrar = () => {
     if (filtroSeleccionado === "año") {
       return (
@@ -228,6 +228,25 @@ const Ventas = () => {
     }
   };
 
+  //----------------------------------------Busqueda
+  const buscarElemento = () => {
+    const busquedaTrimmed = busqueda.trim();
+
+    if (busquedaTrimmed === "") {
+      restablecerVentas();
+    } else {
+      const ventasFiltradas = ventas.filter((venta) =>
+        venta.nombreCom.toLowerCase().includes(busquedaTrimmed.toLowerCase())
+      );
+
+      setVentas(ventasFiltradas);
+    }
+  };
+  const restablecerVentas = () => {
+    obtenerVentas();
+    setBusqueda(""); // También puedes limpiar el campo de búsqueda si lo deseas
+  };
+
   return (
     <div>
       {pdfLink && (
@@ -246,22 +265,47 @@ const Ventas = () => {
           </div>
         </div>
 
-        <div className="overflow-hidden w-4/5 mx-auto p-3">
-          <div className="p-3">
-            <select
-              className="rounded-lg bg-gray-400 mt-2 p-2"
-              onChange={(e) => handleFiltroSeleccionado(e.target.value)}
-            >
-              <option hidden>Filtrar</option>
-              <option value="todo">Filtrar todo</option>
-              <option value="año">Filtrar por mes y año</option>
-              <option value="dia">Filtrar por dia</option>
-            </select>
+        <div className="flex">
+          <div className="overflow-hidden w-4/5 mx-auto p-3">
+            <div className="p-3">
+              <select
+                className="rounded-lg bg-gray-400 mt-2 p-2"
+                onChange={(e) => handleFiltroSeleccionado(e.target.value)}
+              >
+                <option hidden>Filtrar</option>
+                <option value="todo">Filtrar todo</option>
+                <option value="año">Filtrar por mes y año</option>
+                <option value="dia">Filtrar por día</option>
+              </select>
+            </div>
+            {renderizarInputFiltrar()}
           </div>
-          {renderizarInputFiltrar()}
+          <div className="p-6">
+            <div className="flex">
+              <div className="">
+                <input
+                  className="rounded-lg bg-gray-400 mt-2 p-2 placeholder-black"
+                  type="text"
+                  placeholder="Buscar"
+                  value={busqueda}
+                  onChange={(e) => setBusqueda(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      // Lógica de búsqueda aquí, por ejemplo, llamar a una función de búsqueda
+                      buscarElemento();
+                    }
+                  }}
+                  onKeyUp={() => {
+                    if (busqueda.trim() === "") {
+                      restablecerVentas();
+                    }
+                  }}
+                />
+              </div>
+            </div>
+          </div>
         </div>
-
-        <div className="bg-white shadow-md rounded-lg overflow-hidden w-4/5 mx-auto">
+        <div className="bg-white shadow-md rounded-lg overflow-hidden w-5/5 mx-auto">
           <div className="overflow-x-auto">
             <table className="min-w-full bg-white border border-gray-200 ">
               <thead>

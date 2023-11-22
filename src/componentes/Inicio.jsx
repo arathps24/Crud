@@ -7,6 +7,7 @@ export default function Inicio() {
   const [productoSeleccionado, setProductoSeleccionado] = useState(null);
   const [filtrarTablas, setFiltrartTablas] = useState(true);
   const [stockCeroConteo, setStockCeroConteo] = useState(0);
+  const [busqueda, setBusqueda] = useState("");
   //----- Paginador----------------------
   const [paginaActual, setPaginaActual] = useState(1);
   const elementosPorPagina = 7; // Número de elementos por página
@@ -14,16 +15,15 @@ export default function Inicio() {
     setPaginaActual(numeroPagina);
   };
   // Simulación de carga de datos desde una API
+  const obtenerProductos = async () => {
+    try {
+      const response = await MostrarProducto();
+      setProductos(response);
+    } catch (error) {
+      console.error("Error al obtener los productos:", error);
+    }
+  };
   useEffect(() => {
-    const obtenerProductos = async () => {
-      try {
-        const response = await MostrarProducto();
-        setProductos(response);
-      } catch (error) {
-        console.error("Error al obtener los productos:", error);
-      }
-    };
-
     obtenerProductos();
   }, []);
   const handleEliminarProducto = async (id) => {
@@ -52,12 +52,61 @@ export default function Inicio() {
     ).length;
     setStockCeroConteo(StockCero);
   }, [productos]);
+  //----------------------------------------Busqueda
+  const buscarElemento = () => {
+    const busquedaTrimmed = busqueda.trim();
+
+    if (busquedaTrimmed === "") {
+      restablecerProductos();
+    } else {
+      const ProductosFiltrados = productos.filter((producto) => {
+        const Pornombre = producto.nombrePro
+          .toLowerCase()
+          .includes(busquedaTrimmed.toLowerCase());
+        const Porstock = String(producto.stock) === busquedaTrimmed; // Busca coincidencia exacta
+
+        return Pornombre || Porstock;
+      });
+
+      setProductos(ProductosFiltrados);
+    }
+  };
+
+  const restablecerProuctos = () => {
+    //obtenerVentas();
+    obtenerProductos();
+    setBusqueda(""); // También puedes limpiar el campo de búsqueda si lo deseas
+  };
 
   return (
     <div>
       <div className="container mx-auto">
         <h2 className="text-2xl font-bold mb-4 text-center">Productos</h2>
-        <div className="bg-white shadow-md rounded-lg overflow-hidden w-4/5 mx-auto">
+        <div className="p-6">
+          <div className="flex justify-end">
+            <div className="">
+              <input
+                className="rounded-lg bg-gray-400 mt-2 p-2 placeholder-black"
+                type="text"
+                placeholder="Buscar"
+                value={busqueda}
+                onChange={(e) => setBusqueda(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    // Lógica de búsqueda aquí, por ejemplo, llamar a una función de búsqueda
+                    buscarElemento();
+                  }
+                }}
+                onKeyUp={() => {
+                  if (busqueda.trim() === "") {
+                    restablecerProuctos();
+                  }
+                }}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="bg-white shadow-md rounded-lg overflow-hidden w-5/5 mx-auto">
           <div className="overflow-x-auto">
             {stockCeroConteo !== 0 && (
               <div className="p-4">
